@@ -1,26 +1,26 @@
 import csv
 import os.path
+from .conftest import RESOURCE_ROOT_PATH
 
 # TODO оформить в тест, добавить ассерты и использовать универсальный путь
 
 
-CSV_FILE_PATH = os.path.abspath('resources/new_csv.csv')
-PROJECT_ROOT_PATH = os.path.dirname(os.path.dirname(os.path.dirname(CSV_FILE_PATH)))
-JOINED_PATH = os.path.join(PROJECT_ROOT_PATH, 'tests', 'resources', 'new_csv.csv')
-
-
-with open(JOINED_PATH, 'w') as csv_file:
-    csvwriter = csv.writer(csv_file, delimiter=';')
-    csvwriter.writerow(['Bonny', 'Born', 'Peter'])
-    csvwriter.writerow(['Alex', 'Serj', 'Yana'])
-
-
 def test_csv_file_data():
+    csv_file_path = os.path.join(RESOURCE_ROOT_PATH, 'new_csv.csv')
+    with open(csv_file_path, 'w', newline='') as csv_file:
+        csvwriter = csv.writer(csv_file, delimiter=';')
+        csvwriter.writerow(['Bonny', 'Born', 'Peter'])
+        csvwriter.writerow(['Alex', 'Serj', 'Yana'])
+
     data = []
-    with open(JOINED_PATH) as csv_file:
+
+    with open(csv_file_path) as csv_file:
         csvreader = csv.reader(csv_file, delimiter=';')
         for row in csvreader:
             data.append(row)
 
-    assert data[0] == ['Bonny', 'Born', 'Peter']
-    assert data[1] == ['Alex', 'Serj', 'Yana']
+    expected_value_row1 = ['Bonny', 'Born', 'Peter']
+    expected_value_row2 = ['Alex', 'Serj', 'Yana']
+
+    assert data[0] == expected_value_row1
+    assert data[1] == expected_value_row2
