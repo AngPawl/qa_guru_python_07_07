@@ -1,25 +1,24 @@
 import xlrd
 import os.path
+from .conftest import RESOURCE_ROOT_PATH
 
 # TODO оформить в тест, добавить ассерты и использовать универсальный путь
 
-XLS_FILE_PATH = os.path.abspath('resources/file_example_XLS_10.xls')
-PROJECT_ROOT_PATH = os.path.dirname(os.path.dirname(os.path.dirname(XLS_FILE_PATH)))
-JOINED_PATH = os.path.join(
-    PROJECT_ROOT_PATH, 'tests', 'resources', 'file_example_XLS_10.xls'
-)
-
 
 def test_number_of_sheets():
-    book = xlrd.open_workbook('resources/file_example_XLS_10.xls')
+    xls_file_path = os.path.join(RESOURCE_ROOT_PATH, 'file_example_XLS_10.xls')
 
-    expected_nsheets = 1
+    book = xlrd.open_workbook(xls_file_path)
 
-    assert book.nsheets == expected_nsheets
+    expected_num_of_sheets = 1
+
+    assert book.nsheets == expected_num_of_sheets
 
 
 def test_names_of_sheets():
-    book = xlrd.open_workbook('resources/file_example_XLS_10.xls')
+    xls_file_path = os.path.join(RESOURCE_ROOT_PATH, 'file_example_XLS_10.xls')
+
+    book = xlrd.open_workbook(xls_file_path)
 
     expected_sheet_name = ['Sheet1']
 
@@ -27,38 +26,48 @@ def test_names_of_sheets():
 
 
 def test_number_of_columns():
-    book = xlrd.open_workbook('resources/file_example_XLS_10.xls')
+    xls_file_path = os.path.join(RESOURCE_ROOT_PATH, 'file_example_XLS_10.xls')
+
+    book = xlrd.open_workbook(xls_file_path)
 
     sheet = book.sheet_by_index(0)
 
-    expected_ncols = 8
+    expected_num_of_cols = 8
 
-    assert sheet.ncols == expected_ncols
+    assert sheet.ncols == expected_num_of_cols
 
 
 def test_number_of_rows():
-    book = xlrd.open_workbook('resources/file_example_XLS_10.xls')
+    xls_file_path = os.path.join(RESOURCE_ROOT_PATH, 'file_example_XLS_10.xls')
+
+    book = xlrd.open_workbook(xls_file_path)
 
     sheet = book.sheet_by_index(0)
 
-    expected_nrows = 10
+    expected_num_of_rows = 10
 
-    assert sheet.nrows == expected_nrows
+    assert sheet.nrows == expected_num_of_rows
 
 
 def test_column_cross_row_cell_value():
-    book = xlrd.open_workbook('resources/file_example_XLS_10.xls')
+    xls_file_path = os.path.join(RESOURCE_ROOT_PATH, 'file_example_XLS_10.xls')
+
+    book = xlrd.open_workbook(xls_file_path)
 
     sheet = book.sheet_by_index(0)
 
     row = 3
     col = 2
 
-    assert sheet.cell_value(rowx=row, colx=col) == 'Gent'
+    expected_cell_value = 'Gent'
+
+    assert sheet.cell_value(rowx=row, colx=col) == expected_cell_value
 
 
 def test_value_of_rows():
-    book = xlrd.open_workbook('resources/file_example_XLS_10.xls')
+    xls_file_path = os.path.join(RESOURCE_ROOT_PATH, 'file_example_XLS_10.xls')
+
+    book = xlrd.open_workbook(xls_file_path)
 
     expected_values = [
         [0.0, 'First Name', 'Last Name', 'Gender', 'Country', 'Age', 'Date', 'Id'],
