@@ -24,3 +24,5 @@ def test_csv_file_data():
 
     assert data[0] == expected_value_row1
     assert data[1] == expected_value_row2
+
+    os.remove(os.path.abspath(csv_file_path))

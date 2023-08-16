@@ -40,13 +40,19 @@ def test_number_of_images_on_first_page():
         reader = pypdf.PdfReader(pdf_file)
         first_page = reader.pages[0]
         count = 0
+        image_path = ''
         for image_file in first_page.images:
             with open(
                 os.path.join(RESOURCE_ROOT_PATH, str(count) + image_file.name), 'wb'
             ) as fp:
                 fp.write(image_file.data)
+                image_path = os.path.join(
+                    RESOURCE_ROOT_PATH, str(count) + image_file.name
+                )
                 count += 1
 
     expected_number_of_images = 1
 
     assert count == expected_number_of_images
+
+    os.remove(os.path.abspath(image_path))
